@@ -1,5 +1,5 @@
 import { persist, createIndexedDBStorage } from '@macfja/svelte-persistent-store';
-import { writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 
 export type CartItem = {
 	id: string;
@@ -9,6 +9,14 @@ export type CartItem = {
 };
 
 const cart = persist(writable<CartItem[]>([]), createIndexedDBStorage(), 'cart');
+
+const totalItems = derived(cart, (cart) => {
+	return cart.reduce((acc, item) => acc + item.amount, 0);
+});
+
+const totalPrice = derived(cart, (cart) => {
+	return cart.reduce((acc, item) => acc + item.amount * item.price, 0);
+});
 
 function add(item: CartItem) {
 	if (!item.amount) return;
@@ -57,4 +65,4 @@ function decrement(item: CartItem) {
 	});
 }
 
-export { add, remove, increment, decrement, cart };
+export { add, remove, increment, decrement, totalItems, totalPrice, cart };

@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { cart, increment, decrement, remove } from '$lib/stores/cart';
-
-	$: totalPrice = $cart.reduce((acc, item) => acc + item.price * item.amount, 0);
-	$: totalItems = $cart.reduce((acc, item) => acc + item.amount, 0);
+	import { cart, increment, decrement, remove, totalItems, totalPrice } from '$lib/stores/cart';
 </script>
 
 <h2>Cart</h2>
@@ -23,7 +20,7 @@
 {/each}
 
 <div>
-	Total: ${totalPrice}
+	Total: ${$totalPrice}
 </div>
 
-<button>Buy ({totalItems})</button>
+<button>Buy ({$totalItems})</button>
