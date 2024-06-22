@@ -1,12 +1,18 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { add } from '$lib/stores/cart';
+	import type { Product } from '$lib/types';
 
-	let product: { id: string; name: string; price: number };
+	let product = $state<Product>({
+		id: '',
+		name: '',
+		price: 0
+	});
 
-	onMount(() => {
+	let amount = $state(1);
+
+	$effect(() => {
 		const params = [...$page.url.searchParams.keys()];
 		if (!['id', 'name', 'price'].every((key) => params.includes(key))) {
 			goto('/');
@@ -18,8 +24,6 @@
 			};
 		}
 	});
-
-	let amount = 1;
 </script>
 
 <h2>Product</h2>
@@ -28,11 +32,11 @@
 	<div>{product.name}</div>
 	<div>${product.price}</div>
 	<div>
-		<button on:click={() => amount > 1 && amount--} disabled={amount === 1}>-</button>
+		<button onclick={() => amount > 1 && amount--} disabled={amount === 1}>-</button>
 		<input type="number" bind:value={amount} min="1" />
-		<button on:click={() => amount++}>+</button>
+		<button onclick={() => amount++}>+</button>
 	</div>
-	<button style="margin-top: 10px;" on:click={() => add({ ...product, amount })}>
+	<button style="margin-top: 10px;" onclick={() => add({ ...product, amount })}>
 		Add to cart
 	</button>
 {/if}

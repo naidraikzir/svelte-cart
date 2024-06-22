@@ -1,12 +1,6 @@
+import type { CartItem } from '$lib/types';
 import { persist, createIndexedDBStorage } from '@macfja/svelte-persistent-store';
 import { derived, writable } from 'svelte/store';
-
-export type CartItem = {
-	id: string;
-	name: string;
-	price: number;
-	amount: number;
-};
 
 const cart = persist(writable<CartItem[]>([]), createIndexedDBStorage(), 'cart');
 
