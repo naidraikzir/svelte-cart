@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { add } from '$lib/stores/cart';
+	import { cartStore } from '$lib/stores/cart.svelte';
 	import type { Product } from '$lib/types';
 
 	let product = $state<Product>({
@@ -36,7 +36,7 @@
 		<input type="number" bind:value={amount} min="1" />
 		<button onclick={() => amount++}>+</button>
 	</div>
-	<button style="margin-top: 10px;" onclick={() => add({ ...product, amount })}>
+	<button style="margin-top: 10px;" onclick={() => cartStore.add({ ...product, amount })}>
 		Add to cart
 	</button>
 {/if}

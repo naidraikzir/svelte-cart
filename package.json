@@ -13,7 +13,7 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
-		"@macfja/svelte-persistent-store": "^2.4.1"
+		"idb-keyval": "^6.2.1"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.2.2",

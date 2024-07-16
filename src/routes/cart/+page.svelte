@@ -1,22 +1,25 @@
 <script lang="ts">
-	import { cart, increment, decrement, remove, totalItems, totalPrice } from '$lib/stores/cart';
+	import { cartStore } from '$lib/stores/cart.svelte';
 </script>
 
 <h2>Cart</h2>
 
 <table>
 	<tbody>
-		{#each $cart as item}
+		{#each cartStore.cart as item}
 			<tr>
 				<td>{item.name}</td>
 				<td>${item.price}</td>
 				<td>
-					<button onclick={() => item.amount > 1 && decrement(item)} disabled={item.amount === 1}>
+					<button
+						onclick={() => item.amount > 1 && cartStore.decrement(item)}
+						disabled={item.amount === 1}
+					>
 						-
 					</button>
 					<input type="number" bind:value={item.amount} min="1" style="text-align: center;" />
-					<button onclick={() => increment(item)}>+</button>
-					<button onclick={() => remove(item)}>🗑️</button>
+					<button onclick={() => cartStore.increment(item)}>+</button>
+					<button onclick={() => cartStore.remove(item)}>🗑️</button>
 				</td>
 				<td align="right">${item.amount * item.price}</td>
 			</tr>
@@ -25,11 +28,11 @@
 	<tfoot>
 		<tr>
 			<td colspan="3">Total:</td>
-			<td align="right">${$totalPrice}</td>
+			<td align="right">${cartStore.totalPrice}</td>
 		</tr>
 		<tr>
 			<td colspan="4" align="center">
-				<button>Buy ({$totalItems})</button>
+				<button>Buy ({cartStore.totalItems})</button>
 			</td>
 		</tr>
 	</tfoot>

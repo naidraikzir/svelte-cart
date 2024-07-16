@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { add } from '$lib/stores/cart';
+	import { cartStore } from '$lib/stores/cart.svelte';
 	import type { Product } from '$lib/types';
 
 	const products: Product[] = [
@@ -18,6 +18,6 @@
 			{product.name}
 		</a>
 		<div>${product.price}</div>
-		<button onclick={() => add({ ...product, amount: 1 })}>Add to cart</button>
+		<button onclick={() => cartStore.add({ ...product, amount: 1 })}>Add to cart</button>
 	</div>
 {/each}
